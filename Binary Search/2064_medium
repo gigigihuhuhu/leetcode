@@ -1,0 +1,38 @@
+class Solution {
+    public int minimizedMaximum(int n, int[] quantities) {
+        int l=1,r=(int)1e5;
+        int min = r;
+        while(l <= r){
+            int m = (l+r)/2;
+            if(isPossible(n,quantities,m)){
+                min = Math.min(min,m);
+                r = m-1;
+            }
+            else{
+                l = m+1;
+            }
+        }
+        return min;
+    }
+
+    private boolean isPossible(int n, int[] quantities, int m){
+        for(int q : quantities) {
+            n -= (q+m-1)/m; // skill to ceil value efficiently
+            if(n < 0) return false; // skills to reduce variable numbers
+        }
+        return true;
+    }
+
+    // private boolean isPossible(int n, int[] quantities, int max){
+    //     int stores = 0;
+    //     for(int i = 0 ; i < quantities.length; i++){
+    //         stores += quantities[i]/max;
+    //         stores += quantities[i]%max != 0 ? 1 : 0;
+    //     }
+    //     boolean res = n >= stores;
+    //     // System.out.println(max + ": "+ res);
+    //     return res;
+    // }
+}
+
+// https://leetcode.com/problems/minimized-maximum-of-products-distributed-to-any-store/description/?envType=daily-question&envId=2024-11-14
